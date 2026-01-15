@@ -1,0 +1,49 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\DTOs\Task;
+
+use App\Enums\Task\TaskStatus;
+use Carbon\CarbonImmutable;
+use Illuminate\Validation\Rules\Enum as EnumRule;
+use WendellAdriel\ValidatedDTO\Casting\CarbonImmutableCast;
+use WendellAdriel\ValidatedDTO\Casting\EnumCast;
+use WendellAdriel\ValidatedDTO\Casting\StringCast;
+use WendellAdriel\ValidatedDTO\ValidatedDTO;
+
+class UpdateTaskDTO extends ValidatedDTO
+{
+    public ?string $title;
+
+    public ?string $description;
+
+    public ?TaskStatus $status;
+
+    public ?CarbonImmutable $due_date;
+
+    protected function rules(): array
+    {
+        return [
+            'title' => ['sometimes', 'string', 'min:3'],
+            'description' => ['nullable', 'string'],
+            'status' => ['nullable',  new EnumRule(TaskStatus::class)],
+            'due_date' => ['nullable', 'date'],
+        ];
+    }
+
+    protected function defaults(): array
+    {
+        return [];
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'title' => new StringCast(),
+            'description' => new StringCast(),
+            'status' => new EnumCast(TaskStatus::class),
+            'due_date' => new CarbonImmutableCast(),
+        ];
+    }
+}
