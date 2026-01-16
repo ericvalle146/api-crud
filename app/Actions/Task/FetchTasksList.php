@@ -9,17 +9,19 @@ use App\Models\Task;
 
 class FetchTasksList
 {
-    public function __construct(
-        private FetchTaskListDTO $fetch_task_list_dto
-    ) {}
-
-    public function execute()
+    public function execute(FetchTaskListDTO $dto)
     {
-        return Task::query()->paginate(
-            $this->fetch_task_list_dto->per_page,
+        $query = Task::query();
+
+        if ($dto->status) {
+            $query->where('status', $dto->status->value);
+        }
+
+        return $query->paginate(
+            $dto->per_page,
             ['*'],
             'page',
-            $this->fetch_task_list_dto->page
+            $dto->page
         );
     }
 }

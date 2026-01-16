@@ -15,14 +15,16 @@ use App\DTOs\Task\UpdateTaskDTO;
 use App\Http\Resources\TaskResource;
 use App\Http\Responses\ApiSuccessResponse;
 use App\Http\Responses\NoContentResponse;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
 {
-    public function index(FetchTaskListDTO $dto, FetchTasksList $action): ApiSuccessResponse
+    public function index(FetchTaskListDTO $dto, FetchTasksList $action): JsonResponse
     {
         $tasks = $action->execute($dto);
 
-        return new ApiSuccessResponse(TaskResource::collection($tasks));
+        return TaskResource::collection($tasks)->response();
 
     }
 
@@ -38,7 +40,7 @@ class TaskController extends Controller
     {
         $task = $action->execute($dto);
 
-        return new ApiSuccessResponse(new TaskResource($task));
+        return new ApiSuccessResponse(new TaskResource($task), Response::HTTP_CREATED);
 
     }
 
