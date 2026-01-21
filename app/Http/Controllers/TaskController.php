@@ -22,39 +22,27 @@ class TaskController extends Controller
 {
     public function index(FetchTaskListDTO $dto, FetchTasksList $action): JsonResponse
     {
-        $tasks = $action->execute($dto);
-
-        return TaskResource::collection($tasks)->response();
-
+        return TaskResource::collection($action->handle($dto))->response();
     }
 
     public function show(FetchTask $action, $id): ApiSuccessResponse
     {
-        $task = $action->execute($id);
-
-        return new ApiSuccessResponse(new TaskResource($task));
-
+        return new ApiSuccessResponse(new TaskResource($action->handle($id)));
     }
 
     public function store(CreateTaskDTO $dto, CreateTask $action): ApiSuccessResponse
     {
-        $task = $action->execute($dto);
-
-        return new ApiSuccessResponse(new TaskResource($task), Response::HTTP_CREATED);
-
+        return new ApiSuccessResponse(new TaskResource($action->handle($dto)), Response::HTTP_CREATED);
     }
 
     public function update(string $id, UpdateTaskDTO $dto, UpdateTask $action): ApiSuccessResponse
     {
-        $updated = $action->execute($id, $dto);
-
-        return new ApiSuccessResponse(new TaskResource($updated));
-
+        return new ApiSuccessResponse(new TaskResource($action->handle($id, $dto)));
     }
 
     public function destroy(string $id, DeleteTask $action): NoContentResponse
     {
-        $action->execute($id);
+        $action->handle($id);
 
         return new NoContentResponse();
     }

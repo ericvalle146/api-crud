@@ -9,7 +9,7 @@ use App\Models\Task;
 
 class CreateTask
 {
-    public function execute(CreateTaskDTO $dto): Task
+    public function handle(CreateTaskDTO $dto): Task
     {
 
         return Task::create($dto->toArray());

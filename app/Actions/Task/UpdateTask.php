@@ -12,9 +12,10 @@ class UpdateTask
         private FetchTask $fetchTask
     ) {}
 
-    public function execute(string $id, UpdateTaskDTO $dto)
+    public function handle(string $id, UpdateTaskDTO $dto)
     {
-        $task = $this->fetchTask->execute($id);
+        $task = $this->fetchTask->handle($id);
+
         $task->update($dto->toArray());
 
         return $task;

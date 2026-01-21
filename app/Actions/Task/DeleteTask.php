@@ -10,10 +10,8 @@ class DeleteTask
         private FetchTask $fetchTask
     ) {}
 
-    public function execute(string $id): void
+    public function handle(string $id): void
     {
-        $task = $this->fetchTask->execute($id);
-        $task->delete();
-
+        $this->fetchTask->handle($id)->delete();
     }
 }

@@ -3,20 +3,11 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\TaskController;
-use App\Models\Task;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-// Listar todas as tasks
-Route::get('/tasks', [TaskController::class, 'index']);
+Route::resource('tasks', TaskController::class);
 
-// Listar uma task
-Route::get('/tasks/{id}', [TaskController::class, 'show']);
-
-// Criar nova task
-Route::post('/tasks', [TaskController::class, 'store']);
-
-// Atualizar uma task
-Route::put('/tasks/{id}', [TaskController::class, 'update']);
-
-// Excluir uma task
-Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
+Route::prefix('auth')->group(function () {
+    Route::resource('users', UserController::class);
+});

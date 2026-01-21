@@ -8,7 +8,7 @@ use App\Models\Task;
 
 class FetchTask
 {
-    public function execute($id)
+    public function handle($id)
     {
         return Task::findOrFail($id);
     }

@@ -10,15 +10,11 @@ class TaskHelpers
 {
     public static function createTestTask(): Task
     {
-
         return Task::factory()->create();
-
     }
 
     public static function createFakeTestTask(): Task
     {
-
         return Task::factory()->make();
-
     }
 }
