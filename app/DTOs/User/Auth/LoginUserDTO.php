@@ -2,26 +2,28 @@
 
 declare(strict_types=1);
 
-namespace App\DTOs\User;
+namespace App\DTOs\User\Auth;
 
 use Illuminate\Validation\Rules\Password;
 use WendellAdriel\ValidatedDTO\Casting\StringCast;
 use WendellAdriel\ValidatedDTO\ValidatedDTO;
 
-class UpdateUserDTO extends ValidatedDTO
+class LoginUserDTO extends ValidatedDTO
 {
-    public ?string $name;
+    public string $email;
 
-    public ?string $email;
-
-    public ?string $password;
+    public string $password;
 
     protected function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
-            'email' => ['sometimes', 'email', 'unique:users,email,' . request()->route('user')],
-            'password' => ['sometimes', 'string', Password::min(8)->max(255), 'confirmed'],
+            'email' => ['required', 'email', 'string'],
+            'password' => [
+                'required',
+                'string',
+                Password::min(8)
+                    ->max(255),
+            ],
         ];
     }
 
@@ -33,7 +35,6 @@ class UpdateUserDTO extends ValidatedDTO
     protected function casts(): array
     {
         return [
-            'name' => new StringCast(),
             'email' => new StringCast(),
             'password' => new StringCast(),
         ];

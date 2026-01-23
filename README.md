@@ -37,6 +37,8 @@ Se precisar parar os containers:
 - Actions Pattern para isolar regras de negócio por caso de uso em `app/Actions`.
 - DTOs com `wendelladriel/laravel-validated-dto` para validar e tipar entrada de dados.
 - Laravel Pint para padronizar o estilo do código PHP.
+- Laravel Sanctum para autenticação
+- Laravel Permission para associar usuários a funções e permissões.
 
 ## Estrutura da aplicação
 

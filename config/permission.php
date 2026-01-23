@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     'models' => [
@@ -94,6 +96,7 @@ return [
          */
 
         'team_foreign_key' => 'team_id',
+        'use_uuid' => true,
     ],
 
     /*

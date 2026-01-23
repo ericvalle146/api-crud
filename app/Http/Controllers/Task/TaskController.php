@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Task;
 
 use App\Actions\Task\CreateTask;
 use App\Actions\Task\DeleteTask;
@@ -12,7 +12,8 @@ use App\Actions\Task\UpdateTask;
 use App\DTOs\Task\CreateTaskDTO;
 use App\DTOs\Task\FetchTaskListDTO;
 use App\DTOs\Task\UpdateTaskDTO;
-use App\Http\Resources\TaskResource;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Task\TaskResource;
 use App\Http\Responses\ApiSuccessResponse;
 use App\Http\Responses\NoContentResponse;
 use Illuminate\Http\JsonResponse;

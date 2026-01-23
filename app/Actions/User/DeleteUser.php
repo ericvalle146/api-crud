@@ -12,6 +12,6 @@ class DeleteUser
 
     public function handle(string $id): void
     {
-        $user = $this->fetchUser->handle($id)->delete();
+        $this->fetchUser->handle($id)->delete();
     }
 }

@@ -7,10 +7,12 @@ namespace App\Actions\Task;
 use App\DTOs\Task\FetchTaskListDTO;
 use App\Models\Task;
 use App\Support\Pagination;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Ramsey\Collection\Collection;
 
 class FetchTasksList
 {
-    public function handle(FetchTaskListDTO $dto)
+    public function handle(FetchTaskListDTO $dto): LengthAwarePaginator|Collection
     {
         $query = Task::query();
 

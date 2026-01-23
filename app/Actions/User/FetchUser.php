@@ -8,7 +8,7 @@ use App\Models\User;
 
 class FetchUser
 {
-    public function handle(string $id)
+    public function handle(string $id): User
     {
         return User::findOrFail($id);
     }

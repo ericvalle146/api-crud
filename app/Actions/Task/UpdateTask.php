@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Task;
 
 use App\DTOs\Task\UpdateTaskDTO;
+use App\Models\Task;
 
 class UpdateTask
 {
@@ -12,7 +13,7 @@ class UpdateTask
         private FetchTask $fetchTask
     ) {}
 
-    public function handle(string $id, UpdateTaskDTO $dto)
+    public function handle(string $id, UpdateTaskDTO $dto): Task
     {
         $task = $this->fetchTask->handle($id);
 

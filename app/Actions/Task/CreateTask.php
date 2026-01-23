@@ -11,7 +11,6 @@ class CreateTask
 {
     public function handle(CreateTaskDTO $dto): Task
     {
-
         return Task::create($dto->toArray());
     }
 }

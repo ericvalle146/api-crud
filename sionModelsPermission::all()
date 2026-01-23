@@ -1,0 +1,23 @@
+[90m= [39m[
+    [34;4mApp\Enums\User\UserPermissions[39;24m {#6104
+      +[1mname[22m: "[32mLIST_USERS[39m",
+      +[1mvalue[22m: "[32musers.list[39m",
+    },
+    [34;4mApp\Enums\User\UserPermissions[39;24m {#6105
+      +[1mname[22m: "[32mVIEW_USERS[39m",
+      +[1mvalue[22m: "[32musers.view[39m",
+    },
+    [34;4mApp\Enums\User\UserPermissions[39;24m {#6106
+      +[1mname[22m: "[32mCREATE_USERS[39m",
+      +[1mvalue[22m: "[32musers.create[39m",
+    },
+    [34;4mApp\Enums\User\UserPermissions[39;24m {#6103
+      +[1mname[22m: "[32mUPDATE_USERS[39m",
+      +[1mvalue[22m: "[32musers.update[39m",
+    },
+    [34;4mApp\Enums\User\UserPermissions[39;24m {#6093
+      +[1mname[22m: "[32mDELETE_USERS[39m",
+      +[1mvalue[22m: "[32musers.delete[39m",
+    },
+  ]
+

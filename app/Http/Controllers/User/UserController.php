@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Actions\User\CreateUser;
 use App\Actions\User\DeleteUser;
@@ -12,9 +12,11 @@ use App\Actions\User\UpdateUser as UserUpdateUser;
 use App\DTOs\Common\PaginationDTO;
 use App\DTOs\User\CreateUserDTO;
 use App\DTOs\User\UpdateUserDTO;
-use App\Http\Resources\UserResource;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\User\UserResource;
 use App\Http\Responses\ApiSuccessResponse;
 use App\Http\Responses\NoContentResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class UserController extends Controller
@@ -22,7 +24,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(PaginationDTO $dto, FetchUserList $action)
+    public function index(PaginationDTO $dto, FetchUserList $action): JsonResponse
     {
         return UserResource::collection($action->handle($dto))->response();
 
@@ -31,7 +33,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id, FetchUser $action)
+    public function show(string $id, FetchUser $action): ApiSuccessResponse
     {
         return new ApiSuccessResponse(new UserResource($action->handle($id)));
     }
@@ -47,7 +49,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(string $id, UpdateUserDTO $dto, UserUpdateUser $action)
+    public function update(string $id, UpdateUserDTO $dto, UserUpdateUser $action): ApiSuccessResponse
     {
         return new ApiSuccessResponse(new UserResource($action->handle($id, $dto)));
     }
@@ -55,7 +57,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id, DeleteUser $action)
+    public function destroy(string $id, DeleteUser $action): NoContentResponse
     {
         $action->handle($id);
 

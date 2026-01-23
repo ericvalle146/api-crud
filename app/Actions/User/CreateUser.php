@@ -9,13 +9,16 @@ use App\Models\User;
 
 class CreateUser
 {
-    public function handle(CreateUserDTO $dto)
+    public function handle(CreateUserDTO $dto): User
     {
-        return User::create([
+        $user = User::create([
             'name' => $dto->name,
             'email' => $dto->email,
             'password' => bcrypt($dto->password),
         ]);
+        $user->assignRole('user');
+
+        return $user;
 
     }
 }
