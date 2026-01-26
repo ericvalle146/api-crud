@@ -14,11 +14,10 @@ class CreateUser
         $user = User::create([
             'name' => $dto->name,
             'email' => $dto->email,
-            'password' => bcrypt($dto->password),
+            'password' => $dto->password,
         ]);
         $user->assignRole('user');
 
         return $user;
-
     }
 }

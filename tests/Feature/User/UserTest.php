@@ -13,7 +13,7 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_should_return_of_all_users_successfully(): void
+    public function test_should_return_all_users_successfully(): void
     {
         $tokenAdmin = UserHelpers::createTestAdminUserAuthenticated();
 
@@ -39,7 +39,7 @@ class UserTest extends TestCase
             ]);
     }
 
-    public function test_should_must_return_tasks_page_2(): void
+    public function test_should_return_users_page_2(): void
     {
         $tokenAdmin = UserHelpers::createTestAdminUserAuthenticated();
         foreach (range(1, 29) as $number) {
@@ -75,7 +75,7 @@ class UserTest extends TestCase
         $this->assertEquals(15, $responseMeta['per_page']);
     }
 
-    public function test_should_must_return_per_page_5_tasks(): void
+    public function test_should_return_per_page_5_users(): void
     {
         $tokenAdmin = UserHelpers::createTestAdminUserAuthenticated();
         foreach (range(1, 10) as $number) {
@@ -110,7 +110,7 @@ class UserTest extends TestCase
         $this->assertEquals(5, $responseMeta['per_page']);
     }
 
-    public function test_should_of_returning_a_user_successfully(): void
+    public function test_should_return_user_successfully(): void
     {
         $tokenAdmin = UserHelpers::createTestAdminUserAuthenticated();
 
@@ -129,7 +129,7 @@ class UserTest extends TestCase
             ]);
     }
 
-    public function test_should_of_returning_a_user_non_existent(): void
+    public function test_should_return_not_found_for_non_existent_user(): void
     {
         $tokenAdmin = UserHelpers::createTestAdminUserAuthenticated();
         $response = $this->getJson(
@@ -140,7 +140,7 @@ class UserTest extends TestCase
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
-    public function test_should_create_of_a_new_task_successfully(): void
+    public function test_should_create_user_successfully(): void
     {
         $tokenAdmin = UserHelpers::createTestAdminUserAuthenticated();
         $user = UserHelpers::createFakeTestUser();
@@ -168,7 +168,7 @@ class UserTest extends TestCase
             ]);
     }
 
-    public function test_should_create_of_a_new_user_with_missing_data(): void
+    public function test_should_fail_to_create_user_with_missing_data(): void
     {
         $tokenAdmin = UserHelpers::createTestAdminUserAuthenticated();
         $user = UserHelpers::createFakeTestUser();
@@ -186,7 +186,7 @@ class UserTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function test_should_create_of_a_new_user_with_invalid_email(): void
+    public function test_should_fail_to_create_user_with_invalid_email(): void
     {
         $tokenAdmin = UserHelpers::createTestAdminUserAuthenticated();
         $user = UserHelpers::createFakeTestUser();
@@ -238,5 +238,25 @@ class UserTest extends TestCase
         );
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
+    }
+
+    public function test_should_return_unauthorized(): void
+    {
+        $user = UserHelpers::createFakeTestUser();
+
+        $params = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ];
+
+        $response = $this->postJson(
+            'api/users',
+            $params,
+            ['Authorization' => 'Bearer XXXXXXXXXXX']
+        );
+
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 }

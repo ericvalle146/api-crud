@@ -12,7 +12,7 @@ enum UserPermissions: string
     case UPDATE_USERS = 'users.update';
     case DELETE_USERS = 'users.delete';
 
-    public static function all()
+    public static function all(): array
     {
         return [
             self::LIST_USERS,
@@ -28,7 +28,7 @@ enum UserPermissions: string
         return array_column(UserPermissions::cases(), 'value');
     }
 
-    public function description()
+    public function description(): string
     {
         return match ($this) {
             self::LIST_USERS => 'Listar todos usuários',

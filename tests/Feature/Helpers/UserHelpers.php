@@ -10,12 +10,12 @@ use Database\Seeders\Users\CreateUserRoles;
 
 class UserHelpers
 {
-    public static function createTestUser()
+    public static function createTestUser(): User
     {
         return User::factory()->create();
     }
 
-    public static function createTestAdminUser()
+    public static function createTestAdminUser(): User
     {
         (new CreateUserPermissions())->run();
         (new CreateUserRoles())->run();
@@ -23,14 +23,14 @@ class UserHelpers
         return User::factory()->create()->assignRole('admin');
     }
 
-    public static function createAdminToken()
+    public static function createAdminToken(): string
     {
         $admin = self::createTestAdminUser();
 
         return $admin->createToken('test_token')->plainTextToken;
     }
 
-    public static function createFakeTestUser()
+    public static function createFakeTestUser(): User
     {
         return User::factory()->make();
     }

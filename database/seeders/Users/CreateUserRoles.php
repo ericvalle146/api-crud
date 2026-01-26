@@ -19,9 +19,9 @@ class CreateUserRoles extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        foreach (UserRoles::all() as $roles) {
+        foreach (UserRoles::all() as $role) {
             Role::create([
-                'name' => $roles->value,
+                'name' => $role->value,
                 'guard_name' => 'sanctum',
             ]);
         }

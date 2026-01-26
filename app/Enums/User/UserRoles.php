@@ -15,7 +15,6 @@ enum UserRoles: string
             self::ADMIN,
             self::USER,
         ];
-
     }
 
     public function description(): string

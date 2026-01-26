@@ -40,18 +40,6 @@ Se precisar parar os containers:
 - Laravel Sanctum para autenticação
 - Laravel Permission para associar usuários a funções e permissões.
 
-## Estrutura da aplicação
-
-- `app/Actions/` Casos de uso (criar, atualizar, listar, excluir tasks).
-- `app/DTOs/` Objetos de transporte com validação de entrada.
-- `app/Http/Resources/` Formatação da resposta da API.
-- `app/Http/Responses/` Respostas padronizadas da API.
-- `app/Models/` Modelos Eloquent.
-- `routes/` Definição das rotas HTTP.
-- `database/` Migrations, seeds e factories.
-- `tests/` Testes automatizados.
-
-
 ## Como formatar o codigo
 
 - `./vendor/bin/sail pint`

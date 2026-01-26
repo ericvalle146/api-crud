@@ -13,7 +13,7 @@ class UserAuthTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_shold_login_with_email_successfully(): void
+    public function test_should_login_with_email_successfully(): void
     {
         $user = UserHelpers::createTestAdminUser();
         $params = [
@@ -84,8 +84,6 @@ class UserAuthTest extends TestCase
 
     public function test_should_not_return_me_with_invalid_token(): void
     {
-        $adminToken = UserHelpers::createTestAdminUserAuthenticated();
-
         $response = $this->getJson(
             'api/auth/me',
             ['Authorization' => 'Bearer XXXXXXXXXX']

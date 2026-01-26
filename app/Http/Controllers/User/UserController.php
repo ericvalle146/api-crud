@@ -8,7 +8,7 @@ use App\Actions\User\CreateUser;
 use App\Actions\User\DeleteUser;
 use App\Actions\User\FetchUser;
 use App\Actions\User\FetchUserList;
-use App\Actions\User\UpdateUser as UserUpdateUser;
+use App\Actions\User\UpdateUser;
 use App\DTOs\Common\PaginationDTO;
 use App\DTOs\User\CreateUserDTO;
 use App\DTOs\User\UpdateUserDTO;
@@ -27,7 +27,6 @@ class UserController extends Controller
     public function index(PaginationDTO $dto, FetchUserList $action): JsonResponse
     {
         return UserResource::collection($action->handle($dto))->response();
-
     }
 
     /**
@@ -49,7 +48,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(string $id, UpdateUserDTO $dto, UserUpdateUser $action): ApiSuccessResponse
+    public function update(string $id, UpdateUserDTO $dto, UpdateUser $action): ApiSuccessResponse
     {
         return new ApiSuccessResponse(new UserResource($action->handle($id, $dto)));
     }
