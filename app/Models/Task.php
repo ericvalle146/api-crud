@@ -8,6 +8,7 @@ use App\Enums\Task\TaskStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -20,6 +21,7 @@ class Task extends Model
     protected $table = 'tasks';
 
     protected $fillable = [
+        'user_id',
         'title',
         'description',
         'status',
@@ -30,4 +32,9 @@ class Task extends Model
         'status' => TaskStatus::class,
         'due_date' => 'date',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -7,7 +7,9 @@ use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('tasks', TaskController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('tasks', TaskController::class);
+});
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);

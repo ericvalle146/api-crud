@@ -39,4 +39,11 @@ class UserHelpers
     {
         return self::createAdminToken();
     }
+
+    public static function userIdAndToken(): array
+    {
+        $user = User::factory()->create();
+
+        return [$user->id, $user->createToken('auth_token')->plainTextToken];
+    }
 }

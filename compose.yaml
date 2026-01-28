@@ -48,6 +48,21 @@ services:
                 - '${DB_USERNAME}'
             retries: 3
             timeout: 5s
+
+    queue:
+        image: 'sail-8.5/app'
+        command: php artisan queue:work --sleep=3 --tries=3 --timeout=90
+        volumes:
+            - '.:/var/www/html'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+        depends_on:
+            - pgsql
+        networks:
+            - sail
+        restart: unless-stopped
+
 networks:
     sail:
         driver: bridge

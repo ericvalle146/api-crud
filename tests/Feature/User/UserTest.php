@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Feature\User;
 
+use App\Events\User\UserCreated;
+use App\Jobs\User\SendWelcomeEmailJob;
+use App\Listeners\User\SendUserWelcomeNotification;
+use App\Mail\User\WelcomeUserMail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Feature\Helpers\UserHelpers;
 use Tests\TestCase;
@@ -258,5 +265,66 @@ class UserTest extends TestCase
         );
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function test_should_dispatch_user_created_event(): void
+    {
+        Event::fake();
+        $userData = UserHelpers::createFakeTestUser();
+        $tokenAdmin = UserHelpers::createTestAdminUserAuthenticated();
+
+        $params = [
+            'name' => $userData->name,
+            'email' => $userData->email,
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ];
+
+        $response = $this->postJson(
+            'api/users',
+            $params,
+            ['Authorization' => "Bearer {$tokenAdmin}"]
+        );
+
+        $response->assertStatus(Response::HTTP_CREATED)
+            ->assertJsonStructure([
+                'id',
+                'name',
+                'email',
+                'created_at',
+                'updated_at',
+            ]);
+
+        Event::assertDispatched(UserCreated::class);
+    }
+
+    public function test_should_listener_user_dispatches_job(): void
+    {
+        Queue::fake();
+
+        $user = UserHelpers::createTestUser();
+        $listener = app(SendUserWelcomeNotification::class);
+        $event = new UserCreated($user);
+        $listener->handle($event);
+
+        Queue::assertPushed(SendWelcomeEmailJob::class);
+    }
+
+    public function test_should_queue_welcome_email_job(): void
+    {
+        Queue::fake();
+        $user = UserHelpers::createTestUser();
+        SendWelcomeEmailJob::dispatch($user);
+        Queue::assertPushed(SendWelcomeEmailJob::class);
+    }
+
+    public function test_should_send_welcome_email(): void
+    {
+        Mail::fake();
+
+        $user = UserHelpers::createTestUser();
+        (new SendWelcomeEmailJob($user))->handle();
+
+        Mail::assertSent(WelcomeUserMail::class);
     }
 }

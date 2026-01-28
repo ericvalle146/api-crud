@@ -25,6 +25,28 @@ Se precisar parar os containers:
 
 - `./vendor/bin/sail test`
 
+## Email (Mailtrap)
+
+Configure no `.env` (exemplo no `.env.example`):
+
+- `MAIL_MAILER=smtp`
+- `MAIL_HOST=sandbox.smtp.mailtrap.io`
+- `MAIL_PORT=2525`
+- `MAIL_USERNAME=`
+- `MAIL_PASSWORD=`
+- `MAIL_ENCRYPTION=tls`
+- `MAIL_FROM_ADDRESS=noreply@example.com`
+- `MAIL_FROM_NAME=`
+
+### Como testar envio de emails
+
+1. Ative o worker de fila:
+   - `./vendor/bin/sail artisan queue:work`
+2. Dispare um fluxo:
+   - Criar usuário (envia boas‑vindas)
+   - Atualizar task para `completed` (envia email de task concluída)
+3. Verifique o inbox do Mailtrap.
+
 ## Rotas de api
 - `As rotas de API você encontra na pasta routes/doc`
 
@@ -39,6 +61,8 @@ Se precisar parar os containers:
 - Laravel Pint para padronizar o estilo do código PHP.
 - Laravel Sanctum para autenticação
 - Laravel Permission para associar usuários a funções e permissões.
+- Laravel Eventos, Listeners, Mail para gerenciamento de envio de emails
+- Processar tarefas via Filas e Jobs
 
 ## Como formatar o codigo
 
